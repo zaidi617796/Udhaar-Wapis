@@ -83,4 +83,82 @@
     <string name="lang_en">English</string>
     <string name="lang_ur">اردو (Urdu)</string>
     <string name="settings_saved">محفوظ ہو گیا</string>
+
+    <!-- Dashboard tiles (v1.1) -->
+    <string name="dash_khata">کھاتہ</string>
+    <string name="tile_parties">پارٹیاں</string>
+    <string name="tile_cashbook">کیش بک</string>
+    <string name="tile_bills">بل</string>
+    <string name="tile_stock">اسٹاک</string>
+    <string name="tile_expense">خرچہ</string>
+
+    <!-- Cash book -->
+    <string name="cash_balance">ہاتھ میں کیش</string>
+    <string name="cash_in">کیش آیا</string>
+    <string name="cash_out">کیش گیا</string>
+    <string name="cash_add_in">+ کیش آیا</string>
+    <string name="cash_add_out">+ کیش گیا</string>
+    <string name="cash_today_in">آج آیا</string>
+    <string name="cash_today_out">آج گیا</string>
+    <string name="cash_empty">ابھی کوئی کیش انٹری نہیں۔</string>
+    <string name="cash_note_hint">مثلاً فروخت کا کیش</string>
+
+    <!-- Expense -->
+    <string name="exp_month_total">اس مہینے کا خرچہ</string>
+    <string name="exp_add">+ خرچہ شامل کریں</string>
+    <string name="exp_category">قسم</string>
+    <string name="exp_cat_utility">بجلی گیس بل</string>
+    <string name="exp_cat_rent">کرایہ</string>
+    <string name="exp_cat_chai">چائے پانی</string>
+    <string name="exp_cat_transport">ٹرانسپورٹ</string>
+    <string name="exp_cat_other">دیگر</string>
+    <string name="exp_empty">اس مہینے کوئی خرچہ درج نہیں۔</string>
+
+    <!-- Bills -->
+    <string name="bills_new">+ نیا بل</string>
+    <string name="bills_empty">ابھی کوئی بل نہیں۔</string>
+    <string name="bills_walkin">عام گاہک</string>
+    <string name="bills_bill_no">بل #%1$d</string>
+    <string name="bills_customer_label">گاہک</string>
+    <string name="bills_select_customer">گاہک منتخب کریں</string>
+    <string name="bills_items">اشیاء</string>
+    <string name="bills_add_item">+ شے شامل کریں</string>
+    <string name="bills_item_name">شے کا نام</string>
+    <string name="bills_item_name_hint">مثلاً چینی</string>
+    <string name="bills_qty">تعداد</string>
+    <string name="bills_rate">قیمت (روپے)</string>
+    <string name="bills_discount">رعایت (روپے)</string>
+    <string name="bills_subtotal">ذیلی کل</string>
+    <string name="bills_total">کل رقم</string>
+    <string name="bills_on_udhaar">ادھار کھاتے میں ڈالیں</string>
+    <string name="bills_save">بل محفوظ کریں</string>
+    <string name="bills_err_items">پہلے کم از کم ایک شے شامل کریں</string>
+    <string name="bills_err_qty">مہربانی کر کے درست تعداد لکھیں</string>
+    <string name="bills_paid">ادا شدہ</string>
+    <string name="bills_udhaar_tag">ادھار پر</string>
+    <string name="bills_btn_pdf">پی ڈی ایف بل</string>
+    <string name="bills_btn_whatsapp">واٹس ایپ پر بھیجیں</string>
+    <string name="share_bill_title">بل بھیجیں</string>
+    <string name="pdf_bill_title">فروخت بل</string>
+    <string name="pdf_bill_no">بل نمبر: %1$d</string>
+    <string name="pdf_item_col">شے</string>
+    <string name="pdf_qty_col">تعداد</string>
+    <string name="pdf_rate_col">قیمت</string>
+    <string name="pdf_amount_col">رقم</string>
+    <string name="pdf_discount">رعایت</string>
+    <string name="pdf_thanks">خریداری کا شکریہ!</string>
+
+    <!-- Stock -->
+    <string name="stock_empty">ابھی کوئی اسٹاک آئٹم نہیں۔</string>
+    <string name="stock_unit_label">اکائی</string>
+    <string name="stock_unit_hint">مثلاً عدد، کلو، لیٹر</string>
+    <string name="stock_qty_label">مقدار</string>
+    <string name="stock_threshold_label">کم اسٹاک انتباہ (مقدار)</string>
+    <string name="stock_in">اسٹاک آیا</string>
+    <string name="stock_out">اسٹاک گیا</string>
+    <string name="stock_low">اسٹاک کم</string>
+    <string name="stock_edit_title">آئٹم تبدیل کریں</string>
+    <string name="stock_delete_title">آئٹم حذف کریں؟</string>
+    <string name="stock_delete_msg">%1$s اور اس کا اسٹاک ریکارڈ حذف ہو جائے گا۔</string>
+    <string name="err_stock_out">اتنا اسٹاک موجود نہیں</string>
 </resources>

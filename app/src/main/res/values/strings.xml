@@ -83,4 +83,82 @@
     <string name="lang_en">English</string>
     <string name="lang_ur">اردو (Urdu)</string>
     <string name="settings_saved">Saved</string>
+
+    <!-- Dashboard tiles (v1.1) -->
+    <string name="dash_khata">KHATA</string>
+    <string name="tile_parties">Parties</string>
+    <string name="tile_cashbook">Cash Book</string>
+    <string name="tile_bills">Bills</string>
+    <string name="tile_stock">Stock</string>
+    <string name="tile_expense">Expense</string>
+
+    <!-- Cash book -->
+    <string name="cash_balance">Cash in hand</string>
+    <string name="cash_in">Cash In</string>
+    <string name="cash_out">Cash Out</string>
+    <string name="cash_add_in">+ Cash In</string>
+    <string name="cash_add_out">+ Cash Out</string>
+    <string name="cash_today_in">Today in</string>
+    <string name="cash_today_out">Today out</string>
+    <string name="cash_empty">No cash entries yet.</string>
+    <string name="cash_note_hint">e.g. Sale cash</string>
+
+    <!-- Expense -->
+    <string name="exp_month_total">This month\'s expense</string>
+    <string name="exp_add">+ Add expense</string>
+    <string name="exp_category">Category</string>
+    <string name="exp_cat_utility">Utility bills</string>
+    <string name="exp_cat_rent">Rent</string>
+    <string name="exp_cat_chai">Chai-Pani</string>
+    <string name="exp_cat_transport">Transport</string>
+    <string name="exp_cat_other">Other</string>
+    <string name="exp_empty">No expenses recorded this month.</string>
+
+    <!-- Bills -->
+    <string name="bills_new">+ New bill</string>
+    <string name="bills_empty">No bills yet.</string>
+    <string name="bills_walkin">Walk-in customer</string>
+    <string name="bills_bill_no">Bill #%1$d</string>
+    <string name="bills_customer_label">Customer</string>
+    <string name="bills_select_customer">Select customer</string>
+    <string name="bills_items">Items</string>
+    <string name="bills_add_item">+ Add item</string>
+    <string name="bills_item_name">Item name</string>
+    <string name="bills_item_name_hint">e.g. Sugar</string>
+    <string name="bills_qty">Qty</string>
+    <string name="bills_rate">Rate (Rs)</string>
+    <string name="bills_discount">Discount (Rs)</string>
+    <string name="bills_subtotal">Subtotal</string>
+    <string name="bills_total">Total</string>
+    <string name="bills_on_udhaar">Put on udhaar (khata)</string>
+    <string name="bills_save">Save bill</string>
+    <string name="bills_err_items">Add at least one item first</string>
+    <string name="bills_err_qty">Please enter a valid quantity</string>
+    <string name="bills_paid">Paid</string>
+    <string name="bills_udhaar_tag">On udhaar</string>
+    <string name="bills_btn_pdf">PDF bill</string>
+    <string name="bills_btn_whatsapp">Send on WhatsApp</string>
+    <string name="share_bill_title">Share bill</string>
+    <string name="pdf_bill_title">Sale bill</string>
+    <string name="pdf_bill_no">Bill No: %1$d</string>
+    <string name="pdf_item_col">Item</string>
+    <string name="pdf_qty_col">Qty</string>
+    <string name="pdf_rate_col">Rate</string>
+    <string name="pdf_amount_col">Amount</string>
+    <string name="pdf_discount">Discount</string>
+    <string name="pdf_thanks">Thank you for your business!</string>
+
+    <!-- Stock -->
+    <string name="stock_empty">No stock items yet.</string>
+    <string name="stock_unit_label">Unit</string>
+    <string name="stock_unit_hint">e.g. piece, kg, litre</string>
+    <string name="stock_qty_label">Quantity</string>
+    <string name="stock_threshold_label">Low-stock alert at (qty)</string>
+    <string name="stock_in">Stock In</string>
+    <string name="stock_out">Stock Out</string>
+    <string name="stock_low">Low stock</string>
+    <string name="stock_edit_title">Edit item</string>
+    <string name="stock_delete_title">Delete item?</string>
+    <string name="stock_delete_msg">%1$s and its stock record will be deleted.</string>
+    <string name="err_stock_out">Not enough stock available</string>
 </resources>

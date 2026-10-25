@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * Saara data phone par hi — SharedPreferences me JSON.
  * Koi account nahi, koi server nahi, internet ki zaroorat nahi.
- * Keys: customers, entries, shop_name, owner_name, reminder_template, lang, next_id.
+ * Keys: customers, entries, cash_entries, expenses, bills, stock_items,
+ * shop_name, owner_name, reminder_template, lang, next_id, next_bill_no.
  */
 public class KhataStore {
 
@@ -22,7 +23,12 @@ public class KhataStore {
     private final SharedPreferences prefs;
     private final List<Customer> customers = new ArrayList<>();
     private final List<Entry> entries = new ArrayList<>();
+    private final List<CashEntry> cashEntries = new ArrayList<>();
+    private final List<Expense> expenses = new ArrayList<>();
+    private final List<Bill> bills = new ArrayList<>();
+    private final List<StockItem> stockItems = new ArrayList<>();
     private long nextId;
+    private long nextBillNo;
 
     public KhataStore(Context ctx) {
         prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
@@ -34,6 +40,10 @@ public class KhataStore {
     private void load() {
         customers.clear();
         entries.clear();
+        cashEntries.clear();
+        expenses.clear();
+        bills.clear();
+        stockItems.clear();
         try {
             JSONArray ca = new JSONArray(prefs.getString("customers", "[]"));
             for (int i = 0; i < ca.length(); i++) {
@@ -55,10 +65,65 @@ public class KhataStore {
                         o.getLong("date"),
                         o.optString("note", "")));
             }
+            JSONArray ce = new JSONArray(prefs.getString("cash_entries", "[]"));
+            for (int i = 0; i < ce.length(); i++) {
+                JSONObject o = ce.getJSONObject(i);
+                cashEntries.add(new CashEntry(
+                        o.getLong("id"),
+                        o.getInt("type"),
+                        o.getLong("amt"),
+                        o.getLong("date"),
+                        o.optString("note", "")));
+            }
+            JSONArray xa = new JSONArray(prefs.getString("expenses", "[]"));
+            for (int i = 0; i < xa.length(); i++) {
+                JSONObject o = xa.getJSONObject(i);
+                expenses.add(new Expense(
+                        o.getLong("id"),
+                        o.getInt("cat"),
+                        o.getLong("amt"),
+                        o.getLong("date"),
+                        o.optString("note", "")));
+            }
+            JSONArray ba = new JSONArray(prefs.getString("bills", "[]"));
+            for (int i = 0; i < ba.length(); i++) {
+                JSONObject o = ba.getJSONObject(i);
+                Bill b = new Bill(
+                        o.getLong("id"),
+                        o.getLong("no"),
+                        o.getLong("cid"),
+                        o.optString("cname", ""),
+                        o.getLong("date"),
+                        o.optLong("disc", 0),
+                        o.optLong("total", 0),
+                        o.optBoolean("udhaar", false));
+                JSONArray ia = o.optJSONArray("items");
+                if (ia != null) {
+                    for (int j = 0; j < ia.length(); j++) {
+                        JSONObject io = ia.getJSONObject(j);
+                        b.items.add(new BillItem(
+                                io.optString("name", ""),
+                                io.optDouble("qty", 0),
+                                io.optLong("rate", 0)));
+                    }
+                }
+                bills.add(b);
+            }
+            JSONArray sa = new JSONArray(prefs.getString("stock_items", "[]"));
+            for (int i = 0; i < sa.length(); i++) {
+                JSONObject o = sa.getJSONObject(i);
+                stockItems.add(new StockItem(
+                        o.getLong("id"),
+                        o.optString("name", ""),
+                        o.optString("unit", ""),
+                        o.optDouble("qty", 0),
+                        o.optDouble("low", 5)));
+            }
         } catch (Exception ignored) {
             // kharab data par app crash na ho — khaali khata se shuru
         }
         nextId = prefs.getLong("next_id", 1);
+        nextBillNo = prefs.getLong("next_bill_no", 1);
     }
 
     private void save() {
@@ -83,10 +148,67 @@ public class KhataStore {
                 o.put("note", e.note);
                 ea.put(o);
             }
+            JSONArray ce = new JSONArray();
+            for (CashEntry e : cashEntries) {
+                JSONObject o = new JSONObject();
+                o.put("id", e.id);
+                o.put("type", e.type);
+                o.put("amt", e.amount);
+                o.put("date", e.date);
+                o.put("note", e.note);
+                ce.put(o);
+            }
+            JSONArray xa = new JSONArray();
+            for (Expense x : expenses) {
+                JSONObject o = new JSONObject();
+                o.put("id", x.id);
+                o.put("cat", x.category);
+                o.put("amt", x.amount);
+                o.put("date", x.date);
+                o.put("note", x.note);
+                xa.put(o);
+            }
+            JSONArray ba = new JSONArray();
+            for (Bill b : bills) {
+                JSONObject o = new JSONObject();
+                o.put("id", b.id);
+                o.put("no", b.number);
+                o.put("cid", b.customerId);
+                o.put("cname", b.customerName);
+                o.put("date", b.date);
+                o.put("disc", b.discount);
+                o.put("total", b.total);
+                o.put("udhaar", b.onUdhaar);
+                JSONArray ia = new JSONArray();
+                for (BillItem it : b.items) {
+                    JSONObject io = new JSONObject();
+                    io.put("name", it.name);
+                    io.put("qty", it.qty);
+                    io.put("rate", it.rate);
+                    ia.put(io);
+                }
+                o.put("items", ia);
+                ba.put(o);
+            }
+            JSONArray sa = new JSONArray();
+            for (StockItem s : stockItems) {
+                JSONObject o = new JSONObject();
+                o.put("id", s.id);
+                o.put("name", s.name);
+                o.put("unit", s.unit);
+                o.put("qty", s.qty);
+                o.put("low", s.lowThreshold);
+                sa.put(o);
+            }
             prefs.edit()
                     .putString("customers", ca.toString())
                     .putString("entries", ea.toString())
+                    .putString("cash_entries", ce.toString())
+                    .putString("expenses", xa.toString())
+                    .putString("bills", ba.toString())
+                    .putString("stock_items", sa.toString())
                     .putLong("next_id", nextId)
+                    .putLong("next_bill_no", nextBillNo)
                     .apply();
         } catch (Exception ignored) {
         }
@@ -214,6 +336,192 @@ public class KhataStore {
         long last = lastActivityAt(customerId);
         long days = (System.currentTimeMillis() - last) / (24L * 60 * 60 * 1000);
         return days >= 30;
+    }
+
+    // ---------- cash book ----------
+
+    private static boolean sameDay(long a, long b) {
+        Calendar x = Calendar.getInstance();
+        x.setTimeInMillis(a);
+        Calendar y = Calendar.getInstance();
+        y.setTimeInMillis(b);
+        return x.get(Calendar.YEAR) == y.get(Calendar.YEAR)
+                && x.get(Calendar.DAY_OF_YEAR) == y.get(Calendar.DAY_OF_YEAR);
+    }
+
+    /** Cash entries, nayi pehle (date descending). */
+    public List<CashEntry> getCashEntries() {
+        List<CashEntry> out = new ArrayList<>(cashEntries);
+        java.util.Collections.sort(out, (a, b) -> Long.compare(b.date, a.date));
+        return out;
+    }
+
+    public CashEntry addCashEntry(int type, long amount, long date, String note) {
+        CashEntry e = new CashEntry(newId(), type, amount, date, note == null ? "" : note.trim());
+        cashEntries.add(e);
+        save();
+        return e;
+    }
+
+    public void deleteCashEntry(long id) {
+        for (int i = cashEntries.size() - 1; i >= 0; i--) {
+            if (cashEntries.get(i).id == id) cashEntries.remove(i);
+        }
+        save();
+    }
+
+    /** Haath me cash: saare IN minus saare OUT. */
+    public long cashBalance() {
+        long bal = 0;
+        for (CashEntry e : cashEntries) {
+            if (e.type == CashEntry.TYPE_IN) bal += e.amount;
+            else bal -= e.amount;
+        }
+        return bal;
+    }
+
+    public long cashTodayIn() {
+        long sum = 0;
+        long now = System.currentTimeMillis();
+        for (CashEntry e : cashEntries) {
+            if (e.type == CashEntry.TYPE_IN && sameDay(e.date, now)) sum += e.amount;
+        }
+        return sum;
+    }
+
+    public long cashTodayOut() {
+        long sum = 0;
+        long now = System.currentTimeMillis();
+        for (CashEntry e : cashEntries) {
+            if (e.type == CashEntry.TYPE_OUT && sameDay(e.date, now)) sum += e.amount;
+        }
+        return sum;
+    }
+
+    // ---------- expenses ----------
+
+    /** Kharchay, naye pehle (date descending). */
+    public List<Expense> getExpenses() {
+        List<Expense> out = new ArrayList<>(expenses);
+        java.util.Collections.sort(out, (a, b) -> Long.compare(b.date, a.date));
+        return out;
+    }
+
+    public Expense addExpense(int category, long amount, long date, String note) {
+        Expense x = new Expense(newId(), category, amount, date, note == null ? "" : note.trim());
+        expenses.add(x);
+        save();
+        return x;
+    }
+
+    public void deleteExpense(long id) {
+        for (int i = expenses.size() - 1; i >= 0; i--) {
+            if (expenses.get(i).id == id) expenses.remove(i);
+        }
+        save();
+    }
+
+    /** Isi calendar month ke kharchon ka total. */
+    public long expenseThisMonth() {
+        Calendar now = Calendar.getInstance();
+        long sum = 0;
+        for (Expense x : expenses) {
+            Calendar d = Calendar.getInstance();
+            d.setTimeInMillis(x.date);
+            if (d.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                    && d.get(Calendar.MONTH) == now.get(Calendar.MONTH)) {
+                sum += x.amount;
+            }
+        }
+        return sum;
+    }
+
+    /** Is month ki expenses (list screen ke liye). */
+    public List<Expense> expensesThisMonth() {
+        Calendar now = Calendar.getInstance();
+        List<Expense> out = new ArrayList<>();
+        for (Expense x : expenses) {
+            Calendar d = Calendar.getInstance();
+            d.setTimeInMillis(x.date);
+            if (d.get(Calendar.YEAR) == now.get(Calendar.YEAR)
+                    && d.get(Calendar.MONTH) == now.get(Calendar.MONTH)) {
+                out.add(x);
+            }
+        }
+        java.util.Collections.sort(out, (a, b) -> Long.compare(b.date, a.date));
+        return out;
+    }
+
+    // ---------- bills ----------
+
+    /** Bills, naye pehle (date descending). */
+    public List<Bill> getBills() {
+        List<Bill> out = new ArrayList<>(bills);
+        java.util.Collections.sort(out, (a, b) -> Long.compare(b.date, a.date));
+        return out;
+    }
+
+    public Bill getBill(long id) {
+        for (Bill b : bills) if (b.id == id) return b;
+        return null;
+    }
+
+    /** Naya bill: number khud assign hota hai (1, 2, 3...). Discount subtotal par capped. */
+    public Bill addBill(long customerId, String customerName, List<BillItem> items,
+                        long discount, boolean onUdhaar, long date) {
+        Bill b = new Bill(newId(), nextBillNo++, customerId,
+                customerName == null ? "" : customerName.trim(), date, 0, 0, onUdhaar);
+        b.items.addAll(items);
+        long sub = b.subtotal();
+        b.discount = Math.max(0, Math.min(discount, sub));
+        b.total = sub - b.discount;
+        bills.add(b);
+        save();
+        return b;
+    }
+
+    // ---------- stock ----------
+
+    public List<StockItem> getStockItems() {
+        List<StockItem> out = new ArrayList<>(stockItems);
+        java.util.Collections.sort(out, (a, b) -> a.name.compareToIgnoreCase(b.name));
+        return out;
+    }
+
+    public StockItem getStockItem(long id) {
+        for (StockItem s : stockItems) if (s.id == id) return s;
+        return null;
+    }
+
+    public StockItem addStockItem(String name, String unit, double qty, double lowThreshold) {
+        StockItem s = new StockItem(newId(), name.trim(), unit == null ? "" : unit.trim(),
+                qty, lowThreshold);
+        stockItems.add(s);
+        save();
+        return s;
+    }
+
+    public void updateStockItem(StockItem s, String name, String unit, double qty, double lowThreshold) {
+        s.name = name.trim();
+        s.unit = unit == null ? "" : unit.trim();
+        s.qty = qty;
+        s.lowThreshold = lowThreshold;
+        save();
+    }
+
+    /** Stock in/out: delta positive = aaya, negative = gaya. Nateeja 0 se neeche nahi jata. */
+    public void adjustStock(long id, double delta) {
+        StockItem s = getStockItem(id);
+        if (s == null) return;
+        s.qty = Math.max(0, s.qty + delta);
+        save();
+    }
+
+    public void deleteStockItem(long id) {
+        for (int i = stockItems.size() - 1; i >= 0; i--) {
+            if (stockItems.get(i).id == id) stockItems.remove(i);
+        }
+        save();
     }
 
     // ---------- settings ----------

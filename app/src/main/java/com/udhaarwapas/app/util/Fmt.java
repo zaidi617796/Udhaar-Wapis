@@ -12,6 +12,18 @@ public class Fmt {
         return String.format(Locale.US, "Rs %,d", amount);
     }
 
+    /** Stock/bill quantity: 5 -> "5", 2.5 -> "2.5", 2.25 -> "2.25". */
+    public static String qty(double q) {
+        if (q == Math.floor(q) && !Double.isInfinite(q)) {
+            return String.format(Locale.US, "%,d", (long) q);
+        }
+        String s = String.format(Locale.US, "%.2f", q);
+        while (s.contains(".") && (s.endsWith("0") || s.endsWith("."))) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s;
+    }
+
     public static String date(long millis) {
         return new SimpleDateFormat("dd MMM yyyy", Locale.US).format(new Date(millis));
     }

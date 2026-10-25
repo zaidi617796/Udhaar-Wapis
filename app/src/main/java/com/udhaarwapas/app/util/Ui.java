@@ -21,6 +21,13 @@ public class Ui {
     public static final int RED = Color.parseColor("#C0392B");
     public static final int CARD_BORDER = Color.parseColor("#D8E6DC");
 
+    // Dashboard tiles ke accent rang (har tile ka apna) — orange bilkul nahi, green family base
+    public static final int TILE_BLUE = Color.parseColor("#1565C0");
+    public static final int TILE_PURPLE = Color.parseColor("#6A1B9A");
+    public static final int TILE_TEAL = Color.parseColor("#00796B");
+    public static final int TILE_BROWN = Color.parseColor("#6D4C41");
+    public static final int TEAL_END = Color.parseColor("#0F766E");
+
     public static int dp(Context c, int v) {
         return (int) (v * c.getResources().getDisplayMetrics().density + 0.5f);
     }
@@ -30,6 +37,34 @@ public class Ui {
         g.setColor(color);
         g.setCornerRadius(dp(c, radiusDp));
         return g;
+    }
+
+    /** Hero header ka ameer gradient: gehra hara -> hara -> teal. */
+    public static GradientDrawable gradientBg(Context c, int radiusDp) {
+        GradientDrawable g = new GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                new int[]{GREEN_DARK, GREEN, TEAL_END});
+        g.setCornerRadius(dp(c, radiusDp));
+        return g;
+    }
+
+    /** Tile ke icon ke peeche halka sa usi rang ka pas-e-manzar. */
+    public static GradientDrawable softBg(Context c, int color, int radiusDp) {
+        GradientDrawable g = new GradientDrawable();
+        g.setColor(Color.argb(30, Color.red(color), Color.green(color), Color.blue(color)));
+        g.setCornerRadius(dp(c, radiusDp));
+        return g;
+    }
+
+    /** Section ka bara label (masalan KHATA). */
+    public static TextView sectionTitle(Context c, String text) {
+        TextView t = new TextView(c);
+        t.setText(text);
+        t.setTextSize(16);
+        t.setTextColor(TEXT);
+        t.setTypeface(t.getTypeface(), android.graphics.Typeface.BOLD);
+        t.setPadding(0, dp(c, 4), 0, dp(c, 8));
+        return t;
     }
 
     public static GradientDrawable cardBg(Context c) {

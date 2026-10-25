@@ -26,6 +26,30 @@
             android:name=".SettingsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".PartiesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CashBookActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ExpenseActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BillsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".NewBillActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".StockActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

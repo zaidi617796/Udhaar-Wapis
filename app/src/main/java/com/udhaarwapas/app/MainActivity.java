@@ -71,38 +71,55 @@ public class MainActivity extends AppCompatActivity {
     private void refresh() {
         content.removeAllViews();
 
-        // --- Total outstanding (bara hara card) ---
-        LinearLayout totalCard = new LinearLayout(this);
-        totalCard.setOrientation(LinearLayout.VERTICAL);
-        totalCard.setBackground(Ui.roundBg(this, Ui.GREEN, 14));
-        totalCard.setPadding(Ui.dp(this, 18), Ui.dp(this, 16), Ui.dp(this, 18), Ui.dp(this, 16));
+        // --- Hero: gradient header, dukaan ka naam + total udhaar + aaj ki wasooli ---
+        LinearLayout hero = new LinearLayout(this);
+        hero.setOrientation(LinearLayout.VERTICAL);
+        hero.setBackground(Ui.gradientBg(this, 18));
+        hero.setPadding(Ui.dp(this, 18), Ui.dp(this, 18), Ui.dp(this, 18), Ui.dp(this, 18));
+        String shop = store.getShopName();
+        TextView shopTv = new TextView(this);
+        shopTv.setText(shop.isEmpty() ? getString(R.string.app_name) : shop);
+        shopTv.setTextColor(Ui.WHITE);
+        shopTv.setTextSize(19);
+        shopTv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        hero.addView(shopTv);
         TextView tl = new TextView(this);
         tl.setText(getString(R.string.home_total_outstanding));
         tl.setTextColor(0xFFD9EBDF);
         tl.setTextSize(14);
-        totalCard.addView(tl);
+        hero.addView(tl, Ui.matchWrap(this, 10, 0));
         TextView tv = new TextView(this);
         tv.setText(Fmt.rs(store.totalOutstanding()));
         tv.setTextColor(Ui.WHITE);
-        tv.setTextSize(30);
+        tv.setTextSize(34);
         tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        totalCard.addView(tv);
-        content.addView(totalCard, Ui.matchWrap(this, 0, 12));
+        hero.addView(tv);
+        TextView todayTv = new TextView(this);
+        todayTv.setText(getString(R.string.home_today_collection) + ": "
+                + Fmt.rs(store.todaysCollection()));
+        todayTv.setTextColor(0xFFD9EBDF);
+        todayTv.setTextSize(14);
+        hero.addView(todayTv, Ui.matchWrap(this, 5, 0));
+        content.addView(hero, Ui.matchWrap(this, 0, 16));
 
-        // --- Aaj ki collection ---
-        LinearLayout todayCard = card();
-        TextView tcl = new TextView(this);
-        tcl.setText(getString(R.string.home_today_collection));
-        tcl.setTextColor(Ui.MUTED);
-        tcl.setTextSize(14);
-        todayCard.addView(tcl);
-        TextView tcv = new TextView(this);
-        tcv.setText(Fmt.rs(store.todaysCollection()));
-        tcv.setTextColor(Ui.GREEN_DARK);
-        tcv.setTextSize(24);
-        tcv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
-        todayCard.addView(tcv);
-        content.addView(todayCard, Ui.matchWrap(this, 0, 18));
+        // --- KHATA tiles (rangeen dashboard, DigiKhata tarz — rang hamare apne) ---
+        content.addView(sectionTitle(getString(R.string.dash_khata)));
+        content.addView(tileRow(new View[]{
+                tile("👥", getString(R.string.tile_parties), Ui.GREEN,
+                        v -> startActivity(new Intent(this, PartiesActivity.class))),
+                tile("💰", getString(R.string.tile_cashbook), Ui.TILE_BLUE,
+                        v -> startActivity(new Intent(this, CashBookActivity.class))),
+                tile("🧾", getString(R.string.tile_bills), Ui.TILE_PURPLE,
+                        v -> startActivity(new Intent(this, BillsActivity.class))),
+        }));
+        content.addView(tileRow(new View[]{
+                tile("📦", getString(R.string.tile_stock), Ui.TILE_TEAL,
+                        v -> startActivity(new Intent(this, StockActivity.class))),
+                tile("💸", getString(R.string.tile_expense), Ui.TILE_BROWN,
+                        v -> startActivity(new Intent(this, ExpenseActivity.class))),
+                spacerTile(),
+        }));
+        content.addView(spacer(16));
 
         // --- Sab se bare baqaya ---
         List<Customer> debtors = new ArrayList<>();
@@ -160,6 +177,61 @@ public class MainActivity extends AppCompatActivity {
         card.setBackground(Ui.cardBg(this));
         card.setPadding(Ui.dp(this, 16), Ui.dp(this, 12), Ui.dp(this, 16), Ui.dp(this, 12));
         return card;
+    }
+
+    /** Dashboard ki ek rangeen tile: safed card, rang-daar icon, bold label. */
+    private View tile(String glyph, String label, int accent, View.OnClickListener onClick) {
+        LinearLayout t = new LinearLayout(this);
+        t.setOrientation(LinearLayout.VERTICAL);
+        t.setGravity(Gravity.CENTER);
+        t.setBackground(Ui.cardBg(this));
+        t.setPadding(Ui.dp(this, 8), Ui.dp(this, 14), Ui.dp(this, 8), Ui.dp(this, 14));
+
+        TextView icon = new TextView(this);
+        icon.setText(glyph);
+        icon.setTextSize(26);
+        icon.setGravity(Gravity.CENTER);
+        icon.setBackground(Ui.softBg(this, accent, 14));
+        int box = Ui.dp(this, 52);
+        icon.setLayoutParams(new LinearLayout.LayoutParams(box, box));
+        t.addView(icon);
+
+        TextView lbl = new TextView(this);
+        lbl.setText(label);
+        lbl.setTextSize(14);
+        lbl.setTextColor(Ui.TEXT);
+        lbl.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        lbl.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        llp.topMargin = Ui.dp(this, 8);
+        t.addView(lbl, llp);
+
+        t.setOnClickListener(onClick);
+        return t;
+    }
+
+    /** Tiles ki ek kataar (3 tiles, barabar wazan, darmiyan fasla). */
+    private View tileRow(View[] tiles) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        for (int i = 0; i < tiles.length; i++) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            if (i > 0) lp.setMarginStart(Ui.dp(this, 5));
+            if (i < tiles.length - 1) lp.setMarginEnd(Ui.dp(this, 5));
+            row.addView(tiles[i], lp);
+        }
+        LinearLayout.LayoutParams rlp = Ui.matchWrap(this, 0, 10);
+        row.setLayoutParams(rlp);
+        return row;
+    }
+
+    /** Dusri kataar me tile ka size barabar rakhne ke liye khaali jagah. */
+    private View spacerTile() {
+        View v = new View(this);
+        v.setVisibility(View.INVISIBLE);
+        return v;
     }
 
     private TextView sectionTitle(String text) {

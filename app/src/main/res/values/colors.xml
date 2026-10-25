@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_main">#F5F9F5</color>
+    <color name="green_primary">#1B7A43</color>
+    <color name="green_dark">#145C32</color>
+    <color name="text_main">#14231A</color>
+    <color name="text_muted">#5B6B60</color>
+    <color name="red_owed">#C0392B</color>
+</resources>

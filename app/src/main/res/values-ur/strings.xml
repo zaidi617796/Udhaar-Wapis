@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ادھار واپس</string>
+    <string name="save">محفوظ کریں</string>
+    <string name="cancel">منسوخ</string>
+    <string name="delete">حذف کریں</string>
+    <string name="edit">تبدیل کریں</string>
+
+    <!-- Home / daily summary -->
+    <string name="home_total_outstanding">کل ادھار باقی</string>
+    <string name="home_today_collection">آج کی وصولی</string>
+    <string name="home_big_debtors">سب سے زیادہ بقایا</string>
+    <string name="home_overdue_title">30 دن سے ادائیگی نہیں</string>
+    <string name="home_customers">گاہک</string>
+    <string name="home_add_customer">+ نیا گاہک شامل کریں</string>
+    <string name="home_empty">ابھی کوئی گاہک نہیں۔\nکھاتہ شروع کرنے کے لیے \"+ نیا گاہک شامل کریں\" دبائیں۔</string>
+    <string name="settings">ترتیبات</string>
+
+    <!-- Balance wording -->
+    <string name="balance_lene">لینے ہیں</string>
+    <string name="balance_dene">دینے ہیں</string>
+    <string name="balance_clear">حساب برابر</string>
+    <string name="chip_overdue">30+ دن باقی</string>
+
+    <!-- Customer add/edit -->
+    <string name="cust_add_title">نیا گاہک</string>
+    <string name="cust_edit_title">گاہک تبدیل کریں</string>
+    <string name="cust_name_label">گاہک کا نام</string>
+    <string name="cust_name_hint">مثلاً احمد ٹریڈرز</string>
+    <string name="cust_phone_label">موبائل نمبر (واٹس ایپ)</string>
+    <string name="cust_phone_hint">03xx-xxxxxxx</string>
+    <string name="cust_delete_title">گاہک حذف کریں؟</string>
+    <string name="cust_delete_msg">%1$s اور اس کی تمام کھاتہ انٹریاں حذف ہو جائیں گی۔ یہ واپس نہیں ہو سکتا۔</string>
+    <string name="err_name">مہربانی کر کے گاہک کا نام لکھیں</string>
+    <string name="err_phone">مہربانی کر کے درست موبائل نمبر لکھیں</string>
+
+    <!-- Entries -->
+    <string name="entry_add_udhaar">+ ادھار دیا</string>
+    <string name="entry_add_payment">+ ادائیگی ملی</string>
+    <string name="entry_amount_label">رقم (روپے)</string>
+    <string name="entry_amount_hint">مثلاً 5000</string>
+    <string name="entry_note_label">نوٹ (اختیاری)</string>
+    <string name="entry_note_hint">مثلاً 10 کارٹن تیل</string>
+    <string name="entry_date_label">تاریخ</string>
+    <string name="entry_udhaar">ادھار</string>
+    <string name="entry_payment">ادائیگی</string>
+    <string name="entry_delete_title">یہ انٹری حذف کریں؟</string>
+    <string name="entries_empty">اس گاہک کی ابھی کوئی انٹری نہیں۔</string>
+    <string name="err_amount">مہربانی کر کے درست رقم لکھیں</string>
+
+    <!-- Customer detail / actions -->
+    <string name="detail_entries">کھاتہ انٹریاں</string>
+    <string name="btn_whatsapp_reminder">واٹس ایپ یاد دہانی</string>
+    <string name="btn_pdf">پی ڈی ایف اسٹیٹمنٹ</string>
+    <string name="btn_whatsapp_pdf">پی ڈی ایف واٹس ایپ پر بھیجیں</string>
+    <string name="share_statement_title">اسٹیٹمنٹ بھیجیں</string>
+    <string name="err_no_phone">اس گاہک کا فون نمبر محفوظ نہیں ہے</string>
+    <string name="err_no_whatsapp">واٹس ایپ دستیاب نہیں — پی ڈی ایف شیئر کر کے دیکھیں</string>
+    <string name="default_reminder">السلام علیکم {name}، یہ {shop} کی طرف سے یاد دہانی ہے۔ آپ کے ذمے {amount} باقی ہیں۔ مہربانی کر کے جلد ادا کر دیں۔ شکریہ!</string>
+
+    <!-- PDF statement -->
+    <string name="pdf_statement_title">بیلنس اسٹیٹمنٹ</string>
+    <string name="pdf_customer">گاہک</string>
+    <string name="pdf_date_col">تاریخ</string>
+    <string name="pdf_detail_col">تفصیل</string>
+    <string name="pdf_udhaar_col">ادھار</string>
+    <string name="pdf_payment_col">ادائیگی</string>
+    <string name="pdf_total_udhaar">کل ادھار</string>
+    <string name="pdf_total_payment">کل ادائیگی</string>
+    <string name="pdf_balance">بقایا رقم</string>
+    <string name="pdf_owner">مالک: %1$s</string>
+    <string name="pdf_generated_by">ادھار واپس ایپ سے تیار کردہ</string>
+
+    <!-- Settings -->
+    <string name="settings_title">ترتیبات</string>
+    <string name="set_shop_label">دکان / کاروبار کا نام</string>
+    <string name="set_shop_hint">مثلاً غفار ٹریڈرز</string>
+    <string name="set_owner_label">آپ کا نام (مالک)</string>
+    <string name="set_owner_hint">مثلاً محمد زاہد</string>
+    <string name="set_template_label">واٹس ایپ یاد دہانی کا پیغام</string>
+    <string name="set_template_help">{name} = گاہک کا نام، {amount} = بقایا رقم، {shop} = آپ کی دکان کا نام</string>
+    <string name="set_language">زبان</string>
+    <string name="lang_en">English</string>
+    <string name="lang_ur">اردو (Urdu)</string>
+    <string name="settings_saved">محفوظ ہو گیا</string>
+</resources>
